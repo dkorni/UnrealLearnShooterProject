@@ -2,7 +2,6 @@
 
 
 #include "BaseGeometry.h"
-#include "Engine/Engine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseGeometry, Display, All)
 
@@ -19,9 +18,8 @@ void ABaseGeometry::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	printStringTypes();
 
-	//printTypes();
+	printTypes();
 
 }
 
@@ -47,21 +45,5 @@ void ABaseGeometry::printTypes()
 	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health);
 	UE_LOG(LogTemp, Display, TEXT("IsDead: %d"), IsDead);
 	UE_LOG(LogTemp, Display, TEXT("HasWeapon: %d"), static_cast<int>(HasWeapon));
-}
-
-void ABaseGeometry::printStringTypes()
-{
-	int WeaponNum = 4;
-	float Health = 34.43f;
-	bool IsDead = false;
-
-	FString WeaponNumStr = "Weapon num = " + FString::FromInt(WeaponNum);
-	FString HealthStr = "Health = " + FString::SanitizeFloat(Health);
-	FString IsDeadStr = "Is dead = " + FString(IsDead ? "true" : "false");
-
-	FString Stat = FString::Printf(TEXT(" \n -- ALL stat -- \n %s \n %s \n %s"), *WeaponNumStr, *HealthStr, *IsDeadStr);
-	UE_LOG(LogBaseGeometry, Warning, TEXT("%s"), *Stat);
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, Stat, true, FVector2D(1.5f, 1.5f));
 }
 
