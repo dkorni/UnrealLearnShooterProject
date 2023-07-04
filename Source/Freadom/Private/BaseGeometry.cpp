@@ -19,9 +19,9 @@ void ABaseGeometry::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	printStringTypes();
+	// printStringTypes();
 
-	//printTypes();
+	printTypes();
 
 }
 
@@ -34,27 +34,15 @@ void ABaseGeometry::Tick(float DeltaTime)
 
 void ABaseGeometry::printTypes()
 {
-	int WeaponNum = 4;
-	int KillsNum = 7;
-	float Health = 34.43f;
-	bool IsDead = false;
-	bool HasWeapon = true;
-
-	FString Name = "John Connor";
-
-	UE_LOG(LogBaseGeometry, Display, TEXT("Name: %s"), *Name);
-	UE_LOG(LogTemp, Display, TEXT("Weapon num: %d, kills num %i"), WeaponNum, KillsNum);
-	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health);
-	UE_LOG(LogTemp, Display, TEXT("IsDead: %d"), IsDead);
-	UE_LOG(LogTemp, Display, TEXT("HasWeapon: %d"), static_cast<int>(HasWeapon));
+	UE_LOG(LogBaseGeometry, Warning, TEXT("Name: %s"), *GetName());
+	UE_LOG(LogBaseGeometry, Warning, TEXT("Weapon num: %d, kills num %i"), WeaponNum, KillsNum);
+	UE_LOG(LogBaseGeometry, Warning, TEXT("Health: %f"), Health);
+	UE_LOG(LogBaseGeometry, Warning, TEXT("IsDead: %d"), IsDead);
+	UE_LOG(LogBaseGeometry, Warning, TEXT("HasWeapon: %d"), static_cast<int>(HasWeapon));
 }
 
 void ABaseGeometry::printStringTypes()
 {
-	int WeaponNum = 4;
-	float Health = 34.43f;
-	bool IsDead = false;
-
 	FString WeaponNumStr = "Weapon num = " + FString::FromInt(WeaponNum);
 	FString HealthStr = "Health = " + FString::SanitizeFloat(Health);
 	FString IsDeadStr = "Is dead = " + FString(IsDead ? "true" : "false");
