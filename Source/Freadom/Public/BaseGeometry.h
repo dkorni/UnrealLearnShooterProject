@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 #include "BaseGeometry.generated.h"
 
 UCLASS()
@@ -15,9 +16,19 @@ public:
 	// Sets default values for this actor's properties
 	ABaseGeometry();
 
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* BaseMesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Amplitude = 50.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Frequancy = 2.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon") // macros and specificator
 	int32 WeaponNum = 4;
@@ -39,6 +50,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	FVector InitialLocation;
 	void printTypes();
 	void printStringTypes();
+	void printGeometry();
 };
