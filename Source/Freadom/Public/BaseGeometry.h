@@ -7,6 +7,27 @@
 #include "Components/StaticMeshComponent.h"
 #include "BaseGeometry.generated.h"
 
+UENUM(BlueprintType)
+enum class MovementType : uint8
+{
+	Sin,
+	Static
+};
+
+USTRUCT(BlueprintType)
+struct FGeometryData
+{
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Amplitude = 50.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Frequancy = 2.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	MovementType MoveType = MovementType::Static;
+};
+
 UCLASS()
 class FREADOM_API ABaseGeometry : public AActor
 {
@@ -23,12 +44,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float Amplitude = 50.0f;
-
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float Frequancy = 2.0f;
+	UPROPERTY(EditAnywhere, Category = "GeometryData")
+	FGeometryData GeometryData;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon") // macros and specificator
 	int32 WeaponNum = 4;

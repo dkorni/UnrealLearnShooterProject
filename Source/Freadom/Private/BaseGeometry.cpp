@@ -28,10 +28,21 @@ void ABaseGeometry::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector CurrentLocation = GetActorLocation();
-	float time = GetWorld()->GetTimeSeconds();
-	CurrentLocation.Z = InitialLocation.Z + Amplitude * FMath::Sin(Frequancy * time);
-	SetActorLocation(CurrentLocation);
+	switch (GeometryData.MoveType)
+	{
+	case MovementType::Sin: {
+		FVector CurrentLocation = GetActorLocation();
+		float time = GetWorld()->GetTimeSeconds();
+		CurrentLocation.Z = InitialLocation.Z + GeometryData.Amplitude * FMath::Sin(GeometryData.Frequancy * time);
+		SetActorLocation(CurrentLocation);
+		break;
+	}
+		
+	case MovementType::Static:
+		break;
+	default:
+		break;
+	}
 }
 
 void ABaseGeometry::printTypes()
