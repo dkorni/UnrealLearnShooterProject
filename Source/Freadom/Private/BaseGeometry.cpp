@@ -4,6 +4,7 @@
 #include "BaseGeometry.h"
 #include "Engine/Engine.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseGeometry, Display, All)
 
@@ -22,7 +23,9 @@ void ABaseGeometry::BeginPlay()
 {
 	Super::BeginPlay();
 	InitialLocation = GetActorLocation();
-	SetColor();
+	SetColor(GeometryData.Color);
+
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABaseGeometry::OnTimerFired, GeometryData.TimerRate, true);
 }
 
 // Called every frame
@@ -83,10 +86,23 @@ void ABaseGeometry::printGeometry()
 	UE_LOG(LogBaseGeometry, Warning, TEXT("Human transform: %s"), *Transform.ToHumanReadableString());
 }
 
-void ABaseGeometry::SetColor()
+void ABaseGeometry::SetColor(const FLinearColor& Color)
 {
 	UMaterialInstanceDynamic* DynMaterial = BaseMesh->CreateAndSetMaterialInstanceDynamic(0); // создали инстанс материала 0
 	if (DynMaterial) {
-		DynMaterial->SetVectorParameterValue("Color", GeometryData.Color);
+		DynMaterial->SetVectorParameterValue("Color", Color);
+	}
+}
+
+void ABaseGeometry::OnTimerFired()
+{
+	if (++TimerCount <= MaxTimerCount)
+	{
+		const FLinearColor NewColor = FLinearColor::MakeRandomColor();
+		SetColor(NewColor);
+	}
+	else {
+		// останавливаем таймер
+		GetWorldTimerManager().ClearTimer(TimerHandle);
 	}
 }
