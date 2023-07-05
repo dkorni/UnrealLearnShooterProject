@@ -26,6 +26,9 @@ struct FGeometryData
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	MovementType MoveType = MovementType::Static;
+
+	UPROPERTY(EditAnywhere, Category = "Design")
+	FLinearColor Color = FLinearColor::Black;
 };
 
 UCLASS()
@@ -71,4 +74,5 @@ private:
 	void printTypes();
 	void printStringTypes();
 	void printGeometry();
+	void SetColor();
 };

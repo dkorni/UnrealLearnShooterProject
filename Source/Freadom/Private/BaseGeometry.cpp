@@ -3,6 +3,7 @@
 
 #include "BaseGeometry.h"
 #include "Engine/Engine.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseGeometry, Display, All)
 
@@ -21,6 +22,7 @@ void ABaseGeometry::BeginPlay()
 {
 	Super::BeginPlay();
 	InitialLocation = GetActorLocation();
+	SetColor();
 }
 
 // Called every frame
@@ -79,4 +81,12 @@ void ABaseGeometry::printGeometry()
 	UE_LOG(LogBaseGeometry, Warning, TEXT("Scale: %s"), *Scale.ToString());
 
 	UE_LOG(LogBaseGeometry, Warning, TEXT("Human transform: %s"), *Transform.ToHumanReadableString());
+}
+
+void ABaseGeometry::SetColor()
+{
+	UMaterialInstanceDynamic* DynMaterial = BaseMesh->CreateAndSetMaterialInstanceDynamic(0); // создали инстанс материала 0
+	if (DynMaterial) {
+		DynMaterial->SetVectorParameterValue("Color", GeometryData.Color);
+	}
 }
